@@ -1,0 +1,40 @@
+@import "styles/utils";
+@import "styles/navegacion";
+@import "styles/home";
+@import "styles/footer";
+
+html {
+  box-sizing: border-box;
+  font-family: "EB Garamond", serif;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: $claro;
+}
+input {
+  outline: none;
+}
+button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: $claro;
+}
+#app-main-container {
+  min-height: calc(100vh - 85px);
+  background-color: #ecf3fe;
+  padding-bottom: 1rem;
+}
+h1,
+h2,
+h3,
+h4 {
+  text-align: center;
+}

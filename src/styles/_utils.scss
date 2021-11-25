@@ -1,0 +1,45 @@
+$telefono: 480px;
+$tablet: 768px;
+$desktop: 1100px;
+
+// mixins responsive
+
+@mixin telefono {
+  @media (min-width: $telefono) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
+
+// mixins layout
+@mixin grid($columnas: 1, $espacio: 0px) {
+  display: grid;
+  grid-template-columns: repeat($columnas, 1fr);
+  gap: $espacio;
+}
+
+@mixin flexCenter($direction: row, $justify-c: center, $align-i: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-c;
+  align-items: $align-i;
+}
+
+// colores
+$primario: #4372ac;
+$secundario: #ecf3fe;
+$gris: #c3c3c3;
+$oscuro: #232323;
+$claro: #efefef;
+$naranja: #c67837;

@@ -1,0 +1,83 @@
+.navegacion {
+  @include flexCenter();
+  background-color: $primario;
+  height: 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+.menu-close {
+  transform: translateY(-100%);
+}
+.menu-open {
+  transform: translateY(0%);
+}
+.main-container-navegacion {
+  padding: 1rem;
+  width: 100%;
+  @include flexCenter(row, space-between, center);
+
+  @include tablet {
+    justify-content: center;
+    // gap: 3rem;
+  }
+  .container-logo {
+    @include flexCenter();
+    flex-grow: 1;
+    h1 {
+      color: $claro;
+    }
+  }
+  .container-button-menu {
+    button {
+      background-color: transparent;
+      color: $claro;
+      font-size: 1rem;
+    }
+    @include tablet {
+      display: none;
+    }
+  }
+  .container-enlaces-navegacion {
+    @include flexCenter(column);
+    position: fixed;
+    min-width: 100vw;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 1rem 0;
+    background-color: $primario;
+    transition: all 0.3s ease-in-out;
+    a,
+    button {
+      display: block;
+      padding: 0.5rem;
+      width: 100%;
+      text-align: center;
+    }
+    .active {
+      background-color: darken($primario, $amount: 5);
+    }
+    .btn-close {
+      display: block;
+    }
+    @include tablet {
+      transform: translateY(0%);
+      position: static;
+      min-width: auto;
+      flex-grow: 1;
+      flex-direction: row;
+      justify-content: flex-end;
+      background-color: transparent;
+      padding: 0;
+      .btn-close {
+        display: none;
+      }
+      a,
+      button {
+        padding: 0.5rem 0;
+      }
+    }
+  }
+}
