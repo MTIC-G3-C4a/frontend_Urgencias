@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const Login = () => {
+import logo from "../assets/logo.png";
+const Inicio = () => {
   return (
     <div className="container-img-bg">
       <div className="header">
@@ -13,25 +13,15 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="login">
-        <div className="container_login">
-          <h2>Ingresar </h2>
-
-          <form>
-            <br />
-            <input type="cedula" placeholder="CEDULA" />
-            <br />
-            <input type="password" placeholder="PASSWORD" />
-
-            <br />
-            <br />
-            <br />
-          </form>
-          <div className="boton">
-            <button type="submit">Iniciar sesión</button>
-          </div>
-        </div>
+      <div className="main-component">
+        <img id="logo" src={logo} alt="imagen logo" />
       </div>
+
+      {/* <div className="main">
+        <button id="b_registro">REGISTRARSE</button>
+        <button id="b_acceder">ACCEDER</button>
+      </div> */}
+
       <div className="footer">
         <h2>
           “Donde quiera que se ame el arte de la Medicina, se ama también a la
@@ -42,4 +32,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Inicio;

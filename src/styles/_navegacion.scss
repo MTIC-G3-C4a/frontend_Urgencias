@@ -20,7 +20,6 @@
 
   @include tablet {
     justify-content: center;
-    // gap: 3rem;
   }
   .container-logo {
     @include flexCenter();
@@ -55,6 +54,30 @@
       padding: 0.5rem;
       width: 100%;
       text-align: center;
+      @media (max-width: 768px) {
+        padding: 0.5rem 0;
+      }
+    }
+    .buton-arrow {
+      position: relative;
+      span {
+        margin-right: 1rem;
+        font-size: 1rem;
+        font-family: "EB Garamond", serif;
+      }
+      i {
+        transition: transform 0.3s ease;
+      }
+      &.btn-arrow-active {
+        background-color: darken($primario, $amount: 5);
+        i {
+          transform: rotate(90deg);
+        }
+        .submenu-pacientes {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+          height: auto;
+        }
+      }
     }
     .active {
       background-color: darken($primario, $amount: 5);
@@ -79,5 +102,25 @@
         padding: 0.5rem 0;
       }
     }
+  }
+}
+.submenu-pacientes {
+  top: 100%;
+  background-color: darken($primario, $amount: 5);
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  height: 0;
+
+  width: 1;
+  @include flexCenter(column, center, stretch);
+  transition: all 0.3s ease;
+
+  a {
+    display: block;
+    padding: 0.5rem;
+  }
+  @media (min-width: 768px) {
+    position: absolute;
+    width: 100%;
+    top: 100%;
   }
 }

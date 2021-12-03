@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import AboutUs from "../components/AboutUs";
 import Footer from "../components/Footer";
 import Home from "../components/Home";
 import Navegacion from "../components/layout/Navegacion";
 import AdminRouter from "./AdminRouter";
-
+import NotFound from "../components/NotFound";
 const HomeRouter = () => {
   const [open, setOpen] = useState(false);
   const handleToggleMenu = () => {
@@ -23,9 +23,13 @@ const HomeRouter = () => {
       <div onClick={handleClickOutCloseMenu} id="app-main-container">
         <Navegacion handleToggleMenu={handleToggleMenu} open={open} />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about-us" component={AboutUs} />
-          <Route path="/admin-pacientes" component={AdminRouter} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/home/about-us" component={AboutUs} />
+          <Route path="/home/admin-pacientes" component={AdminRouter} />
+          {/* <Route path="*" component={NotFound} /> */}
+          <Route path="/*" component={NotFound}>
+            <Redirect to="/page-not-found" />
+          </Route>
         </Switch>
       </div>
       <Footer />

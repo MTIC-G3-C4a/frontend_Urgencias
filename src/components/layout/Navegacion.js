@@ -1,7 +1,9 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Navegacion = ({ handleToggleMenu, open }) => {
+  const [isActiveBtnArrow, setIsActiveBtnArrow] = useState(false);
+  const location = useLocation();
   return (
     <nav className="navegacion">
       <div className="main-container-navegacion">
@@ -22,11 +24,27 @@ const Navegacion = ({ handleToggleMenu, open }) => {
           <button className="btn-close" onClick={handleToggleMenu}>
             X
           </button>
-          <NavLink exact to="/" activeClassName="active">
+          <NavLink exact to="/home" activeClassName="active">
             Inicio
           </NavLink>
-          <button>Pacientes</button>
-          <NavLink exact to="/about-us" activeClassName="active">
+          <button
+            onClick={() => setIsActiveBtnArrow(!isActiveBtnArrow)}
+            className={`${
+              location.pathname.includes("/home/admin-pacientes")
+                ? "active"
+                : ""
+            }
+            ${isActiveBtnArrow ? "buton-arrow btn-arrow-active" : "buton-arrow"}
+            `}
+          >
+            <span>Pacientes</span>
+            <i className="fas fa-chevron-right"></i>
+            <div className="submenu-pacientes">
+              <Link to="/home/admin-pacientes">crear paciente</Link>
+              <Link to="/home/admin-pacientes/pacientes">ver todos</Link>
+            </div>
+          </button>
+          <NavLink exact to="/home/about-us" activeClassName="active">
             Sobre Nosotros
           </NavLink>
           <button>Log Out</button>

@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import HomeRouter from "./HomeRouter";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import NotFound from "../components/NotFound";
+import Inicio from "../components/Inicio";
 const AppRouter = () => {
   const [auth, setAuth] = useState(true);
   return (
     <div>
       <BrowserRouter>
         <Switch>
-          <PrivateRoute path="/" auth={auth} component={HomeRouter} />
+          <PublicRoute exact path="/" auth={auth} component={Inicio} />
           <PublicRoute exact path="/login" auth={auth} component={Login} />
           <PublicRoute
             exact
@@ -20,7 +21,11 @@ const AppRouter = () => {
             auth={auth}
             component={Register}
           />
-          <Route path="/*" component={NotFound} />
+          <Route exact path="/page-not-found" component={NotFound} />
+          <PrivateRoute path="/home" auth={auth} component={HomeRouter} />
+          <Route path="/*" component={NotFound}>
+            <Redirect to="/page-not-found" />
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>
