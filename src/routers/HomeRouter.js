@@ -8,6 +8,7 @@ import AdminRouter from "./AdminRouter";
 import NotFound from "../components/NotFound";
 const HomeRouter = () => {
   const [open, setOpen] = useState(false);
+
   const handleToggleMenu = () => {
     setOpen(!open);
   };
@@ -26,7 +27,6 @@ const HomeRouter = () => {
           <Route exact path="/home" component={Home} />
           <Route exact path="/home/about-us" component={AboutUs} />
           <Route path="/home/admin-pacientes" component={AdminRouter} />
-          {/* <Route path="*" component={NotFound} /> */}
           <Route path="/*" component={NotFound}>
             <Redirect to="/page-not-found" />
           </Route>

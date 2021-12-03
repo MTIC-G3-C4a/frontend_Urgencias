@@ -16,12 +16,6 @@ const Inicio = () => {
       <div className="main-component">
         <img id="logo" src={logo} alt="imagen logo" />
       </div>
-
-      {/* <div className="main">
-        <button id="b_registro">REGISTRARSE</button>
-        <button id="b_acceder">ACCEDER</button>
-      </div> */}
-
       <div className="footer">
         <h2>
           “Donde quiera que se ame el arte de la Medicina, se ama también a la
