@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import contextAuth from "../AuthContext";
 
 const Navegacion = ({ handleToggleMenu, open }) => {
   const [isActiveBtnArrow, setIsActiveBtnArrow] = useState(false);
   const location = useLocation();
+  const { setAcceso } = useContext(contextAuth);
+  const handleLogOut = () => {
+    setAcceso(false);
+    localStorage.clear();
+  };
+
   return (
     <nav className="navegacion">
       <div className="main-container-navegacion">
@@ -47,7 +54,7 @@ const Navegacion = ({ handleToggleMenu, open }) => {
           <NavLink exact to="/home/about-us" activeClassName="active">
             Sobre Nosotros
           </NavLink>
-          <button>Log Out</button>
+          <button onClick={handleLogOut}>Log Out</button>
         </div>
       </div>
     </nav>

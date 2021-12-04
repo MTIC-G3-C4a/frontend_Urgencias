@@ -1,7 +1,52 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+import contextAuth from "./AuthContext";
 
+const CREATE_DOCTOR = gql`
+  mutation SignUpUser($userInput: SignUpInput) {
+    signUpUser(userInput: $userInput) {
+      refresh
+      access
+    }
+  }
+`;
+const initialState = {
+  username: "",
+  cedula: "",
+  password: "",
+  nombre: "",
+  correo: "",
+  especialidad: "",
+};
 const Register = () => {
+  const [user, setUser] = useState(initialState);
+  const { setAccess } = useContext(contextAuth);
+
+  const handleChangeInputs = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const [createDoctor] = useMutation(CREATE_DOCTOR);
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    console.log(user);
+
+    createDoctor({ variables: { userInput: user } }).then((res) => {
+      console.log(res);
+
+      const tokenAccess = res.data.signUpUser.access;
+      const tokenRefresh = res.data.signUpUser.refresh;
+
+      localStorage.setItem("token_access", tokenAccess);
+      localStorage.setItem("token_refresh", tokenRefresh);
+
+      setAccess(true);
+    });
+
+    setUser(initialState);
+  };
   return (
     <div className="container-img-bg">
       <div className="header">
@@ -17,23 +62,61 @@ const Register = () => {
         <div className="container_registro">
           <h2>Registrarse</h2>
 
-          <form>
-            <input type="nombre" placeholder="NOMBRE" />
+          <form onSubmit={handleSubmitForm}>
+            <input
+              onChange={handleChangeInputs}
+              type="nombre"
+              value={user.username}
+              name="username"
+              placeholder="USERNAME"
+            />
             <br />
-            <input type="cedula" placeholder="CEDULA" />
+            <input
+              type="text"
+              name="nombre"
+              value={user.nombre}
+              onChange={handleChangeInputs}
+              placeholder="NOMBRE"
+            />
             <br />
-            <input type="password" placeholder="PASSWORD" />
+            <input
+              onChange={handleChangeInputs}
+              type="cedula"
+              value={user.cedula}
+              name="cedula"
+              placeholder="CEDULA"
+            />
             <br />
-            <input type="correo" placeholder="CORREO" />
+            <input
+              onChange={handleChangeInputs}
+              type="password"
+              value={user.password}
+              name="password"
+              placeholder="PASSWORD"
+            />
             <br />
-            <input type="especialidad" placeholder="ESPECIALIDAD" />
+            <input
+              onChange={handleChangeInputs}
+              type="correo"
+              value={user.correo}
+              name="correo"
+              placeholder="CORREO"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="especialidad"
+              value={user.especialidad}
+              name="especialidad"
+              placeholder="ESPECIALIDAD"
+            />
             <br />
             <br />
             <br />
+            <div className="boton">
+              <button type="submit">Registrarse</button>
+            </div>
           </form>
-          <div className="boton">
-            <button type="submit">Registrarse</button>
-          </div>
         </div>
       </div>
       <div className="footer">
