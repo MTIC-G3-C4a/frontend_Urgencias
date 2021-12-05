@@ -2,35 +2,10 @@
   margin-top: 40px;
   padding: 1rem;
   @include grid(3, 10px);
-  .paciente {
-    padding: 1rem;
-    background-color: $primario;
-    border-radius: 10px;
-    @include flexCenter(column, center, stretch);
-    gap: 10px;
-    h3 {
-      // margin: 10px 0;
-      color: $claro;
-    }
-    p {
-      text-align: center;
-      color: $claro;
-    }
-    strong {
-      color: $claro;
-    }
+  @media (max-width: 768px) {
+    @include grid(2, 10px);
   }
-  .detalles-extras,
-  .detalles-salud {
-    background-color: $claro;
-    padding: 10px;
-    border-radius: 5px;
-    p {
-      text-align: start;
-      color: $oscuro;
-    }
-    strong {
-      color: $primario;
-    }
+  @media (max-width: 480px) {
+    @include grid(1, 10px);
   }
 }

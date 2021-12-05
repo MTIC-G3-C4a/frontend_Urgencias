@@ -1,9 +1,11 @@
 import { useMutation, gql } from "@apollo/client";
 import React, { createContext, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 const contextAuth = createContext();
 
 const AuthContext = ({ children }) => {
   //  const { data, loading } = useQuery(All_pacientes);
+  const history = useHistory();
   const REFRESH_SESION = gql`
     mutation Mutation($refresh: String!) {
       refreshToken(refresh: $refresh) {
@@ -19,6 +21,7 @@ const AuthContext = ({ children }) => {
       localStorage.getItem("token_refresh") === null ||
       localStorage.getItem("token_access") === null
     ) {
+      setAcceso(false);
       return false;
     }
 
@@ -35,6 +38,8 @@ const AuthContext = ({ children }) => {
       localStorage.clear();
       console.log(error);
       alert("Su sesión expiró, por favor vuelva a iniciar sesión");
+      setAcceso(false);
+
       return false;
     }
   };

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 import contextAuth from "./AuthContext";
-
+import Swal from "sweetalert2";
 const CREATE_DOCTOR = gql`
   mutation SignUpUser($userInput: SignUpInput) {
     signUpUser(userInput: $userInput) {
@@ -33,17 +33,21 @@ const Register = () => {
     e.preventDefault();
     console.log(user);
 
-    createDoctor({ variables: { userInput: user } }).then((res) => {
-      console.log(res);
+    createDoctor({ variables: { userInput: user } })
+      .then((res) => {
+        console.log(res);
 
-      const tokenAccess = res.data.signUpUser.access;
-      const tokenRefresh = res.data.signUpUser.refresh;
+        const tokenAccess = res.data.signUpUser.access;
+        const tokenRefresh = res.data.signUpUser.refresh;
 
-      localStorage.setItem("token_access", tokenAccess);
-      localStorage.setItem("token_refresh", tokenRefresh);
+        localStorage.setItem("token_access", tokenAccess);
+        localStorage.setItem("token_refresh", tokenRefresh);
 
-      setAccess(true);
-    });
+        setAccess(true);
+      })
+      .catch((error) => {
+        Swal.fire("error", "datos incorrectos", "error");
+      });
 
     setUser(initialState);
   };

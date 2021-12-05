@@ -39,6 +39,7 @@ const Login = () => {
   const handleChangeInputs = (e) => {
     setFormLogin({ ...formLogin, [e.target.name]: e.target.value });
   };
+
   return (
     <div className="container-img-bg">
       <div className="header">
