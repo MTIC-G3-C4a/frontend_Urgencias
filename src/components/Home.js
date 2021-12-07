@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import imgSmall from "../assets/img-fondo.jpg";
 import imgDesk from "../assets/img-fondo-desk.jpg";
 import salud1 from "../assets/salud.jpg";
 import salud2 from "../assets/salud-2.jpg";
 import salud3 from "../assets/salud-3.png";
+import contextAuth from "./AuthContext";
 
 const Home = () => {
+  const { enfermedades } = useContext(contextAuth);
+
   return (
     <div className="main-container-home">
       <div className="container-img-home">

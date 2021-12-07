@@ -1,11 +1,20 @@
-import { useMutation, gql } from "@apollo/client";
+import { useMutation, gql, useLazyQuery } from "@apollo/client";
 import React, { createContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
 const contextAuth = createContext();
 
 const AuthContext = ({ children }) => {
   //  const { data, loading } = useQuery(All_pacientes);
-  const history = useHistory();
+
+  const ALL_ENFERMEDADES = gql`
+    query Query {
+      getAllEnfermedades {
+        nombre
+        sintomas
+        medicina
+      }
+    }
+  `;
+
   const REFRESH_SESION = gql`
     mutation Mutation($refresh: String!) {
       refreshToken(refresh: $refresh) {
@@ -15,7 +24,26 @@ const AuthContext = ({ children }) => {
   `;
   const [acceso, setAcceso] = useState(false);
   const [refreshSesion] = useMutation(REFRESH_SESION);
+  const [
+    getEnfermedades,
+    {
+      data: enfermedades,
+      error: errorEnfermedades,
+      loading: loadingenfermedades,
+    },
+  ] = useLazyQuery(ALL_ENFERMEDADES);
 
+  // const {
+  //   data: enfermedades,
+  //   error: errorEnfermedades,
+  //   loading: loadingenfermedades,
+  // } = useQuery(ALL_ENFERMEDADES);
+
+  console.log({
+    data: enfermedades,
+    error: errorEnfermedades,
+    loading: loadingenfermedades,
+  });
   const isAuth = async () => {
     if (
       localStorage.getItem("token_refresh") === null ||
@@ -43,10 +71,8 @@ const AuthContext = ({ children }) => {
       return false;
     }
   };
-
   useEffect(() => {
     isAuth().then((res) => {
-      console.log(res);
       setAcceso(res);
     });
     return () => {
@@ -54,10 +80,19 @@ const AuthContext = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (acceso) {
+      getEnfermedades();
+    }
+  }, [acceso]);
+
   const data = {
     auth: acceso,
     setAcceso,
     isAuth,
+    enfermedades,
+    errorEnfermedades,
+    loadingenfermedades,
   };
   return <contextAuth.Provider value={data}>{children}</contextAuth.Provider>;
 };
