@@ -7,6 +7,12 @@ export const ALL_ENFERMEDADES = gql`
     getAllEnfermedades {
       sintomas
     }
+
+    getEnfermedadesPaciente(documento: $documento) {
+      nombre
+      sintomas
+      medicina
+    }
   }
 `;
 
@@ -29,6 +35,8 @@ var ViewsEnfermedades = () => {
       });
     }
   }, [enfermedades]);
+  // SE ORDENAN ALFABETICAMENTE
+  allSintomas.sort()
   console.log(allSintomas);
   console.log(enfermedades);
   if (errorEnfermedades) {
@@ -40,7 +48,7 @@ var ViewsEnfermedades = () => {
       {loadingenfermedades ? (
         <Spinner />
       ) : (
-        <div className="container-enfermedades">
+        <div className="container-enfermedades-sintomas">
           {allSintomas.map((sintoma, i) => {
             return (
               <div className="container-sintomas" key={`${i}${sintoma}`}>
@@ -51,6 +59,9 @@ var ViewsEnfermedades = () => {
           })}
         </div>
       )}
+        <div className="container-btns-sintomas">
+          <button className="btn-predecir" Diagnóstico Presuntivo> </button>
+        </div>
     </div>
   );
 };
