@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react";
-import { gql, useLazyQuery } from "@apollo/client";
+import React from "react";
+import { gql, useQuery } from "@apollo/client";
 import Spinner from "../Spinner";
 import Paciente from "./Paciente";
-import contextAuth from "../AuthContext";
 export const ALL_PACIENTES = gql`
   query Query {
     getAllPacientes {
@@ -20,14 +19,8 @@ export const ALL_PACIENTES = gql`
 `;
 
 const ViewsPacientes = () => {
-  const [getPacientes, { data, error, loading }] = useLazyQuery(ALL_PACIENTES);
-  const { auth } = useContext(contextAuth);
-  useEffect(() => {
-    if (auth) {
-      getPacientes();
-    }
-  }, [auth]);
-  if (error) return <p style={{ color: "red" }}>error</p>;
+  const { data, error, loading } = useQuery(ALL_PACIENTES);
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div>
@@ -35,7 +28,7 @@ const ViewsPacientes = () => {
         <Spinner />
       ) : (
         <div className="container-pacientes">
-          {data?.getAllPacientes.map((paciente) => {
+          {data.getAllPacientes.map((paciente) => {
             return <Paciente paciente={paciente} key={paciente.documento} />;
           })}
         </div>
