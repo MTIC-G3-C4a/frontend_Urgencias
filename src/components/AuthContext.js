@@ -15,6 +15,12 @@ const initialStatePaciente = {
 const AuthContext = ({ children }) => {
   //  const { data, loading } = useQuery(All_pacientes);
 
+  const initialStateEnfermedad = {
+    nombre: "",
+    sintomas: "",
+    medicina: "",
+  };
+
   const ALL_ENFERMEDADES = gql`
     query Query {
       getAllEnfermedades {
@@ -33,6 +39,9 @@ const AuthContext = ({ children }) => {
     }
   `;
   const [acceso, setAcceso] = useState(false);
+  const [editandoEnfermedad, setEditandoEnfermedad] = useState({
+    edit: false,
+    enfermedad: initialStateEnfermedad,
   const [editandoPaciente, setEditandoPaciente] = useState({
     edit: false,
     paciente: initialStatePaciente,
@@ -107,6 +116,8 @@ const AuthContext = ({ children }) => {
     enfermedades,
     errorEnfermedades,
     loadingenfermedades,
+    editandoEnfermedad,
+    setEditandoEnfermedad,
     editandoPaciente,
     setEditandoPaciente,
   };
