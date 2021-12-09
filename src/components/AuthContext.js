@@ -53,11 +53,11 @@ const AuthContext = ({ children }) => {
   //   loading: loadingenfermedades,
   // } = useQuery(ALL_ENFERMEDADES);
 
-  console.log({
-    data: enfermedades,
-    error: errorEnfermedades,
-    loading: loadingenfermedades,
-  });
+  // console.log({
+  //   data: enfermedades,
+  //   error: errorEnfermedades,
+  //   loading: loadingenfermedades,
+  // });
   const isAuth = async () => {
     if (
       localStorage.getItem("token_refresh") === null ||

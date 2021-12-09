@@ -38,7 +38,6 @@ const CREATE_PACIENTE = gql`
   }
 `;
 
-
 const initialState = {
   documento: "",
   tipoDocumento: "",
@@ -52,20 +51,18 @@ const initialState = {
 };
 
 const CreatePaciente = () => {
-    const [PacienteInput, setPaciente] = useState(initialState);
-    const { setAccess, editandoPaciente, isAuth } = useContext(contextAuth);
+  const [PacienteInput, setPaciente] = useState(initialState);
+  const { setAcceso, editandoPaciente, isAuth } = useContext(contextAuth);
 
-    const [createPaciente] = useMutation(CREATE_PACIENTE, {
-      refetchQueries: [{ query: ALL_PACIENTES }],
-    });
-    const [editPaciente] = useMutation(EDIT_PACIENTE, {
-      refetchQueries: [{ query: ALL_PACIENTES }],
-    });
+  const [createPaciente] = useMutation(CREATE_PACIENTE, {
+    refetchQueries: [{ query: ALL_PACIENTES }],
+  });
+  const [editPaciente] = useMutation(EDIT_PACIENTE, {
+    refetchQueries: [{ query: ALL_PACIENTES }],
+  });
 
-    //edicion de paciente
+  //edicion de paciente
   useEffect(() => {
-    console.log("edit");
-    console.log(editandoPaciente);
     if (editandoPaciente.edit) {
       console.log("edit");
       console.log(editandoPaciente.paciente);
@@ -75,155 +72,170 @@ const CreatePaciente = () => {
       setPaciente(initialState);
     };
   }, [editandoPaciente]);
-  
-    const handleChangeInputs = (e) => {
-      if(e.target.name === "edad"|| e.target.name === "celular"){
-        setPaciente({ ...PacienteInput, [e.target.name]: Number(e.target.value) });
-        return
-      }
-      setPaciente({ ...PacienteInput, [e.target.name]: e.target.value });
-      console.log(e.target.value)
 
-    };
-  
-    // const [createPaciente] = useMutation(CREATE_PACIENTE);
-  
-    const handleSubmitForm = async(e) => {
-      const formulario=document.getElementById("formRegistro")
-      e.preventDefault();
-      const autenticado = await isAuth();
+  const handleChangeInputs = (e) => {
+    console.log("entrando");
+    if (e.target.name === "edad" || e.target.name === "celular") {
+      setPaciente({
+        ...PacienteInput,
+        [e.target.name]: Number(e.target.value),
+      });
+      return;
+    }
+    if (e.target.name === "sintoma") {
+      console.log("sintoma cambiando?");
+      return;
+    }
+    console.log("no puedo ser sintoma");
+    setPaciente({ ...PacienteInput, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    const formulario = document.getElementById("formRegistro");
+    const autenticado = await isAuth();
     if (!autenticado) return;
+
+    const inputSintomas = document.querySelectorAll(
+      "input[name=sintoma]:checked"
+    );
+    // console.log(inputSintomas);
+    let arraySint = [];
+    inputSintomas.forEach((input) => {
+      arraySint.push(input.value);
+    });
+
+    let { sintoma, ...newpaciente } = PacienteInput;
+    newpaciente.sintomas = arraySint;
     if (editandoPaciente.edit) {
-      const { __typename, ...newPacientes } = PacienteInput;
+      const { __typename, sintomas, ...newPacientes } = PacienteInput;
       editPaciente({
         variables: {
-          paciente: newPacientes,
+          paciente: { ...newPacientes, sintomas: arraySint },
         },
       })
         .then((res) => {
           console.log(res);
-          // const tokenAccess = res.data.signUpUser.access;
-          // const tokenRefresh = res.data.signUpUser.refresh;
-
-          // localStorage.setItem("token_access", tokenAccess);
-          // localStorage.setItem("token_refresh", tokenRefresh);
           Swal.fire("Exito", "Paciente editado correctamente", "success");
         })
         .catch((error) => {
           console.log(error);
           Swal.fire("error", "error al editar paciente", "error");
         });
-  
+
       setPaciente(initialState);
       formulario.reset();
-      return
-    };
-      console.log(PacienteInput);
-      // setPaciente({ ...PacienteInput, edad: Number(PacienteInput.edad) });
-      // console.log(PacienteInput);
-      const inputSintomas= document.querySelectorAll("input[name=sintoma]:checked") 
-      console.log(inputSintomas)
-      let arraySint=[]
-      inputSintomas.forEach((input)=>{
-        arraySint.push(input.value)
-      })
-      console.log(PacienteInput)
-      console.log(arraySint)
-      createPaciente({ variables: { paciente : {...PacienteInput,sintomas:arraySint}} })
+      return;
+    }
+
+    // const inputSintomas = document.querySelectorAll(
+    //   "input[name=sintoma]:checked"
+    // );
+    // // console.log(inputSintomas);
+    // let arraySint = [];
+    // inputSintomas.forEach((input) => {
+    //   arraySint.push(input.value);
+    // });
+
+    // let { sintoma, ...newpaciente } = PacienteInput;
+    // newpaciente.sintomas = arraySint;
+    createPaciente({
+      variables: {
+        paciente: newpaciente,
+      },
+    })
       .then((res) => {
         console.log(res);
-         setAccess(true);
         Swal.fire("Exito", "Paciente creado correctamente", "success");
+        setAcceso(true);
       })
       .catch((error) => {
         console.log(error);
         Swal.fire("error", "datos incorrectos", "error");
       });
-      setPaciente(initialState);
-      formulario.reset();
-    }
+    setPaciente(initialState);
+    formulario.reset();
+  };
 
-
-    return (<div className="container-crear-paciente">
-  <div className="registro-paciente">
-    <div className="container_registro-paciente">
-    <br />
+  return (
+    <div className="container-crear-paciente">
+      <div className="registro-paciente">
+        <div className="container_registro-paciente">
+          <br />
           <h2>
             {editandoPaciente.edit ? "Editar Paciente" : "Registrar Paciente"}
           </h2>
           <br />
-    <br />
-      <form onSubmit={handleSubmitForm} id="formRegistro">
-      
-        <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.documento}
-          name="documento"
-          placeholder="Documento"
-        />
-        <br />
-        <input
-          type="text"
-          name="tipoDocumento"
-          value={PacienteInput.tipoDocumento}
-          onChange={handleChangeInputs}
-          placeholder="Tipo de Documento"
-        />
-        <br />
-        <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.nombre}
-          name="nombre"
-          placeholder="Nombre"
-        />
-        <br />
-        <input
-          onChange={handleChangeInputs}
-          type="number"
-          value={PacienteInput.edad}
-          name="edad"
-          placeholder="Edad"
-          
-        />
-        <br />
-        <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.genero}
-          name="genero"
-          placeholder="Genero"
-        />
-        <br />
-        <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.celular}
-          name="celular"
-          placeholder="Celular"
-        />
-        <br />
-        <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.correo}
-          name="correo"
-          placeholder="Correo"
-        />
-        <br />
-        <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.observaciones}
-          name="observaciones"
-          placeholder="Observaciones"
-        />
-        <br />
+          <br />
+          <form onSubmit={handleSubmitForm} id="formRegistro">
+            <input
+              onChange={handleChangeInputs}
+              type="text"
+              value={PacienteInput.documento}
+              name="documento"
+              placeholder="Documento"
+            />
+            <br />
+            <input
+              type="text"
+              name="tipoDocumento"
+              value={PacienteInput.tipoDocumento}
+              onChange={handleChangeInputs}
+              placeholder="Tipo de Documento"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="text"
+              value={PacienteInput.nombre}
+              name="nombre"
+              placeholder="Nombre"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="number"
+              value={PacienteInput.edad}
+              name="edad"
+              placeholder="Edad"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="text"
+              value={PacienteInput.genero}
+              name="genero"
+              placeholder="Genero"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="text"
+              value={PacienteInput.celular}
+              name="celular"
+              placeholder="Celular"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="text"
+              value={PacienteInput.correo}
+              name="correo"
+              placeholder="Correo"
+            />
+            <br />
+            <input
+              onChange={handleChangeInputs}
+              type="text"
+              value={PacienteInput.observaciones}
+              name="observaciones"
+              placeholder="Observaciones"
+            />
+            <br />
 
-        <br />
-        <h3> Seleccione los síntomas: </h3>
-        {/* <input
+            <br />
+            <h3> Seleccione los síntomas: </h3>
+            {/* <input
           onChange={handleChangeInputs}
           type="text"
           value={PacienteInput.sintomas}
@@ -231,21 +243,25 @@ const CreatePaciente = () => {
           placeholder="Sintomas"
           disabled
         /> */}
-        {/* <br />
+            {/* <br />
         <br /> */}
-        <ViewsEnfermedades setPaciente={setPaciente} handleChangeInputs={handleChangeInputs}> </ViewsEnfermedades>
-        <div className="boton-paciente">
-          <button type="submit">{editandoPaciente.edit
+            <ViewsEnfermedades
+              setPaciente={setPaciente}
+              handleChangeInputs={handleChangeInputs}
+            ></ViewsEnfermedades>
+            <div className="boton-paciente">
+              <button type="submit">
+                {editandoPaciente.edit
                   ? "Editar Paciente"
-                  : "Registrar Paciente"}</button>
+                  : "Registrar Paciente"}
+              </button>
+            </div>
+            <br></br>
+          </form>
         </div>
-        <br></br>
-        
-      </form>
+      </div>
     </div>
-  </div>
-</div>)
-
-  }
+  );
+};
 
 export default CreatePaciente;
