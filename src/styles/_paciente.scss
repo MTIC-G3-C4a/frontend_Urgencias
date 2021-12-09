@@ -1,0 +1,90 @@
+.paciente {
+  padding: 1rem;
+  background-color: $primario;
+  border-radius: 10px;
+  @include flexCenter(column, center, stretch);
+  gap: 10px;
+  h3 {
+    // margin: 10px 0;
+    color: $claro;
+  }
+  p {
+    text-align: center;
+    color: $claro;
+  }
+  strong {
+    color: $claro;
+  }
+}
+.detalles-extras,
+.detalles-salud {
+  background-color: $claro;
+  padding: 10px;
+  border-radius: 5px;
+  p {
+    text-align: start;
+    color: $oscuro;
+  }
+  strong {
+    color: $primario;
+  }
+}
+.container-btns-paciente {
+  // background-color: $claro;
+  // padding: 10px;
+  // border-radius: 5px;
+  @include flexCenter();
+  gap: 10px;
+  button {
+    @include flexCenter();
+    gap: 5px;
+    background-color: $claro;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+    .container-spinner {
+      // height: auto;
+      width: 1rem;
+      height: 1rem;
+      .sk-chase {
+        width: 1rem;
+        height: 1rem;
+        // width: 100%;
+      }
+    }
+    &:hover {
+      transform: scale(1.1, 1.1);
+      transition: all 0.3s ease-out;
+    }
+    &.btn-eliminar {
+      border: 1px solid $rojo;
+      color: $rojo;
+      &:hover {
+        color: $claro;
+        background-color: $rojo;
+        // transition: all 0.3s ease-out;
+      }
+    }
+    &.btn-editar {
+      border: 1px solid $primario;
+      color: $primario;
+      &:hover {
+        color: $claro;
+        background-color: $primario;
+        border: 1px solid $claro;
+      }
+    }
+    &.btn-pred {
+      border: 1px solid $primario;
+      color: $primario;
+      &:hover {
+        color: $primario;
+        background-color: $gris;
+        // transition: all 0.3s ease-out;
+      }
+    }
+  }
+}

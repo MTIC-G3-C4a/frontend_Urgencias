@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import contextAuth from "../AuthContext";
 
 const Navegacion = ({ handleToggleMenu, open }) => {
   const [isActiveBtnArrow, setIsActiveBtnArrow] = useState(false);
+  const [isActiveBtnArrow2, setIsActiveBtnArrow2] = useState(false);
   const location = useLocation();
+  const { setAcceso } = useContext(contextAuth);
+  const handleLogOut = () => {
+    setAcceso(false);
+    localStorage.clear();
+  };
+
   return (
     <nav className="navegacion">
       <div className="main-container-navegacion">
@@ -40,14 +48,35 @@ const Navegacion = ({ handleToggleMenu, open }) => {
             <span>Pacientes</span>
             <i className="fas fa-chevron-right"></i>
             <div className="submenu-pacientes">
-              <Link to="/home/admin-pacientes">crear paciente</Link>
-              <Link to="/home/admin-pacientes/pacientes">ver todos</Link>
+              <Link to="/home/admin-pacientes">Crear Paciente</Link>
+              <Link to="/home/admin-pacientes/pacientes">Ver Todos</Link>
+            </div>
+          </button>
+          <button
+            onClick={() => setIsActiveBtnArrow2(!isActiveBtnArrow2)}
+            className={`${
+              location.pathname.includes("/home/admin-pacientes/enfermedad")
+                ? "active"
+                : ""
+            }
+            ${
+              isActiveBtnArrow2 ? "buton-arrow btn-arrow-active" : "buton-arrow"
+            }
+            `}
+          >
+            <span>Enfermedades</span>
+            <i className="fas fa-chevron-right"></i>
+            <div className="submenu-pacientes">
+              <Link to="/home/admin-pacientes/enfermedad">
+                Crear Enfermedad
+              </Link>
+              <Link to="/home/admin-pacientes/enfermedades">Ver Todas</Link>
             </div>
           </button>
           <NavLink exact to="/home/about-us" activeClassName="active">
             Sobre Nosotros
           </NavLink>
-          <button>Log Out</button>
+          <button onClick={handleLogOut}>Log Out</button>
         </div>
       </div>
     </nav>

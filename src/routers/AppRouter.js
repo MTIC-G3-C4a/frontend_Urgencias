@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "../components/Login";
 import Register from "../components/Register";
@@ -7,8 +7,10 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import NotFound from "../components/NotFound";
 import Inicio from "../components/Inicio";
+import contextAuth from "../components/AuthContext";
+
 const AppRouter = () => {
-  const [auth, setAuth] = useState(true);
+  const { auth } = useContext(contextAuth);
   return (
     <div>
       <BrowserRouter>
