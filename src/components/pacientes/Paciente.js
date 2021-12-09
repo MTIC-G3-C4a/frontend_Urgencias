@@ -89,7 +89,7 @@ const Paciente = ({ paciente }) => {
         </p>
         <p>
           <strong>Sintomas: </strong>
-          {paciente.sintomas.join(",")}
+          {paciente.sintomas.join(", ")}
         </p>
       </div>
       <div className="container-btns-paciente">
