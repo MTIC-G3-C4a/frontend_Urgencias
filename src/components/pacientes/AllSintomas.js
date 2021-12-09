@@ -3,8 +3,6 @@ import { gql } from "@apollo/client";
 import Spinner from "../Spinner";
 import contextAuth from "../AuthContext";
 export const ALL_ENFERMEDADES = gql`
-
-
   query Query {
     getAllEnfermedades {
       sintomas
@@ -18,8 +16,7 @@ export const ALL_ENFERMEDADES = gql`
   }
 `;
 
-
-var ViewsEnfermedades = ({setPaciente,handleChangeInputs}) => {
+var ViewsEnfermedades = ({ setPaciente, handleChangeInputs }) => {
   const { enfermedades, errorEnfermedades, loadingenfermedades } =
     useContext(contextAuth);
   const [allSintomas, setAllSintomas] = useState([]);
@@ -39,8 +36,8 @@ var ViewsEnfermedades = ({setPaciente,handleChangeInputs}) => {
     }
   }, [enfermedades]);
   // SE ORDENAN ALFABETICAMENTE
-  allSintomas.sort()
-  console.log(allSintomas);
+  allSintomas.sort();
+  // console.log(allSintomas);
   console.log(enfermedades);
   if (errorEnfermedades) {
     console.log(errorEnfermedades);
@@ -56,7 +53,12 @@ var ViewsEnfermedades = ({setPaciente,handleChangeInputs}) => {
             return (
               <div className="container-sintomas" key={`${i}${sintoma}`}>
                 <label>{sintoma}</label>
-                <input type="checkbox" name="sintoma" onChange={handleChangeInputs} value={sintoma} />
+                <input
+                  type="checkbox"
+                  name="sintoma"
+                  onChange={handleChangeInputs}
+                  value={sintoma}
+                />
               </div>
             );
           })}
