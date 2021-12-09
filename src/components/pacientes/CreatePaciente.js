@@ -4,7 +4,6 @@ import contextAuth from "../AuthContext";
 import ViewsEnfermedades from "./AllSintomas";
 import Swal from "sweetalert2";
 import { ALL_PACIENTES } from "./ViewsPacientes";
-import { Link } from "react-router-dom";
 
 const EDIT_PACIENTE = gql`
   mutation Mutation($paciente: PacienteInput!) {
@@ -52,7 +51,8 @@ const initialState = {
 
 const CreatePaciente = () => {
   const [PacienteInput, setPaciente] = useState(initialState);
-  const { setAcceso, editandoPaciente, isAuth } = useContext(contextAuth);
+  const { setAcceso, editandoPaciente, setEditandoPaciente, isAuth } =
+    useContext(contextAuth);
 
   const [createPaciente] = useMutation(CREATE_PACIENTE, {
     refetchQueries: [{ query: ALL_PACIENTES }],
@@ -63,18 +63,34 @@ const CreatePaciente = () => {
 
   //edicion de paciente
   useEffect(() => {
+    async function verifyAuth() {
+      await isAuth();
+    }
+    verifyAuth();
+
     if (editandoPaciente.edit) {
-      console.log("edit");
-      console.log(editandoPaciente.paciente);
       setPaciente(editandoPaciente.paciente);
     }
     return () => {
       setPaciente(initialState);
+      setEditandoPaciente({
+        edit: false,
+        paciente: {
+          documento: "",
+          tipoDocumento: "",
+          nombre: "",
+          edad: "",
+          genero: "",
+          celular: "",
+          correo: "",
+          observaciones: "",
+          sintomas: [""],
+        },
+      });
     };
-  }, [editandoPaciente]);
+  }, []);
 
   const handleChangeInputs = (e) => {
-    console.log("entrando");
     if (e.target.name === "edad" || e.target.name === "celular") {
       setPaciente({
         ...PacienteInput,
@@ -83,24 +99,21 @@ const CreatePaciente = () => {
       return;
     }
     if (e.target.name === "sintoma") {
-      console.log("sintoma cambiando?");
       return;
     }
-    console.log("no puedo ser sintoma");
     setPaciente({ ...PacienteInput, [e.target.name]: e.target.value });
   };
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    const formulario = document.getElementById("formRegistro");
     const autenticado = await isAuth();
     if (!autenticado) return;
 
+    let arraySint = [];
+    const formulario = document.getElementById("formRegistro");
     const inputSintomas = document.querySelectorAll(
       "input[name=sintoma]:checked"
     );
-    // console.log(inputSintomas);
-    let arraySint = [];
     inputSintomas.forEach((input) => {
       arraySint.push(input.value);
     });
@@ -124,21 +137,24 @@ const CreatePaciente = () => {
         });
 
       setPaciente(initialState);
+      setEditandoPaciente({
+        edit: false,
+        paciente: {
+          documento: "",
+          tipoDocumento: "",
+          nombre: "",
+          edad: "",
+          genero: "",
+          celular: "",
+          correo: "",
+          observaciones: "",
+          sintomas: [""],
+        },
+      });
       formulario.reset();
       return;
     }
 
-    // const inputSintomas = document.querySelectorAll(
-    //   "input[name=sintoma]:checked"
-    // );
-    // // console.log(inputSintomas);
-    // let arraySint = [];
-    // inputSintomas.forEach((input) => {
-    //   arraySint.push(input.value);
-    // });
-
-    // let { sintoma, ...newpaciente } = PacienteInput;
-    // newpaciente.sintomas = arraySint;
     createPaciente({
       variables: {
         paciente: newpaciente,
@@ -235,16 +251,6 @@ const CreatePaciente = () => {
 
             <br />
             <h3> Seleccione los síntomas: </h3>
-            {/* <input
-          onChange={handleChangeInputs}
-          type="text"
-          value={PacienteInput.sintomas}
-          name="sintomas"
-          placeholder="Sintomas"
-          disabled
-        /> */}
-            {/* <br />
-        <br /> */}
             <ViewsEnfermedades
               setPaciente={setPaciente}
               handleChangeInputs={handleChangeInputs}

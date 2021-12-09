@@ -31,8 +31,6 @@ var ViewsEnfermedades = ({ setPaciente, handleChangeInputs }) => {
   }, [enfermedades]);
   // SE ORDENAN ALFABETICAMENTE
   allSintomas.sort();
-  // console.log(allSintomas);
-  console.log(enfermedades);
   if (errorEnfermedades) {
     console.log(errorEnfermedades);
     return <p style={{ color: "red" }}>error</p>;

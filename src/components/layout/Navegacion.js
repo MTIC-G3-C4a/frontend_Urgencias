@@ -45,34 +45,34 @@ const Navegacion = ({ handleToggleMenu, open }) => {
             ${isActiveBtnArrow ? "buton-arrow btn-arrow-active" : "buton-arrow"}
             `}
           >
-            
             <span>Pacientes</span>
             <i className="fas fa-chevron-right"></i>
             <div className="submenu-pacientes">
               <Link to="/home/admin-pacientes">Crear Paciente</Link>
               <Link to="/home/admin-pacientes/pacientes">Ver Todos</Link>
-
             </div>
-            
           </button>
           <button
             onClick={() => setIsActiveBtnArrow2(!isActiveBtnArrow2)}
             className={`${
-              location.pathname.includes("/home/admin-pacientes")
+              location.pathname.includes("/home/admin-pacientes/enfermedad")
                 ? "active"
                 : ""
             }
-            ${isActiveBtnArrow2 ? "buton-arrow btn-arrow-active" : "buton-arrow"}
+            ${
+              isActiveBtnArrow2 ? "buton-arrow btn-arrow-active" : "buton-arrow"
+            }
             `}
           >
-          <span>Enfermedades</span>
+            <span>Enfermedades</span>
             <i className="fas fa-chevron-right"></i>
             <div className="submenu-pacientes">
-              <Link to="/home/admin-pacientes/enfermedad">Crear Enfermedad</Link>
-              <Link to="/home/admin-pacientes/enfermedades">Ver Todos</Link>
-
+              <Link to="/home/admin-pacientes/enfermedad">
+                Crear Enfermedad
+              </Link>
+              <Link to="/home/admin-pacientes/enfermedades">Ver Todas</Link>
             </div>
-            </button>
+          </button>
           <NavLink exact to="/home/about-us" activeClassName="active">
             Sobre Nosotros
           </NavLink>

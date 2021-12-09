@@ -10,17 +10,17 @@
   }
 }
 
-
 .container-enfermedades-sintomas {
-  margin-top: 40px;
+  margin-top: 1rem;
   padding: 1rem;
-  @include grid(4, 10px);
-  @media (max-width: 768px) {
+  width: 100%;
+  @include grid(3, 10px);
+  @media (min-width: 768px) {
     @include grid(2, 10px);
   }
-  @media (max-width: 480px) {
-    @include grid(1, 10px);
-  }
+  // @media (max-width: 480px) {
+  //   @include grid(1, 10px);
+  // }
 }
 
 .container-btns-sintomas {
@@ -28,7 +28,7 @@
   gap: 10px;
   button {
     @include flexCenter();
-    gap: 5px;;
+    gap: 5px;
     background-color: $claro;
     padding: 0.5rem 1rem;
     border-radius: 10px;
@@ -57,32 +57,34 @@
   }
 }
 
-.container_diagnostico{
+.container_diagnostico {
   .container-spinner {
-    // height: auto;
-    color: $claro;
     margin: 0 auto;
     width: 1rem;
     height: 1rem;
     .sk-chase {
       width: 1rem;
       height: 1rem;
-      // width: 100%;
+    }
+    .sk-chase-dot:before {
+      background-color: $claro;
     }
   }
-  .container_enfermedad_filt{
-    margin-top: 40px;
+  .container_enfermedad_filt {
     padding: 1rem;
     @include flexCenter(column);
-    div{
+    border-bottom: 1px solid $claro;
+    div {
       width: 100%;
-      p{
+      p {
+        text-align: start;
         width: 100%;
+        strong {
+          margin-right: 5px;
+        }
       }
       @include flexCenter(row, flex-start);
       gap: 5px;
     }
-
   }
-
 }

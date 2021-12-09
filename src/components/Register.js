@@ -31,7 +31,6 @@ const Register = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log(user);
 
     createDoctor({ variables: { userInput: user } })
       .then((res) => {

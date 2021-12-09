@@ -85,31 +85,39 @@
   }
 }
 
-  .container-enfermedades {
-    @include flexCenter(column, flex-start);
-    padding: 1rem;
-    width: 95%;
-    margin: 0 auto;
-    background-color: $claro;
-    border-radius: 1rem;
-    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(35, 35, 35, 0);
-    .paciente{
-        margin: 16px 0;
-    }
-    h3{
-      margin: 16px 0;
-      color: $primario;
-    }
+.container-enfermedades {
+  @include flexCenter(column, center, stretch);
+  padding: 1rem;
+  width: 95%;
+  margin: 0 auto;
+  background-color: $claro;
+  border-radius: 1rem;
 
-    .container-description {
-      color: $oscuro;
-      h2 {
-        color: $primario;
-        margin-bottom: 10px;
-      }
-      p {
-        text-align: center;
-      }
+  .grid-enfermedades {
+    @include flexCenter(column, center, stretch);
+    gap: 5px;
+    margin-top: 1rem;
+    @media (min-width: 768px) {
+      @include grid(2, 10px);
+    }
+    @media (min-width: 1000px) {
+      @include grid(3, 10px);
+    }
+  }
+
+  h3 {
+    color: $primario;
+  }
+
+  .container-description {
+    color: $oscuro;
+    h2 {
+      color: $primario;
+      margin-bottom: 10px;
+    }
+    p {
+      text-align: center;
+    }
   }
   .container-cards {
     @include flexCenter(column);

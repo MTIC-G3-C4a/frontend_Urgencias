@@ -19,10 +19,8 @@ const Login = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log(formLogin);
     loginDoctor({ variables: { credentials: formLogin } })
       .then((res) => {
-        console.log(res.data);
         const tokenAccess = res.data.logIn.access;
         const tokenRefresh = res.data.logIn.refresh;
 

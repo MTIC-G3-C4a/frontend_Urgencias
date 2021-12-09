@@ -57,17 +57,6 @@ const AuthContext = ({ children }) => {
     },
   ] = useLazyQuery(ALL_ENFERMEDADES);
 
-  // const {
-  //   data: enfermedades,
-  //   error: errorEnfermedades,
-  //   loading: loadingenfermedades,
-  // } = useQuery(ALL_ENFERMEDADES);
-
-  // console.log({
-  //   data: enfermedades,
-  //   error: errorEnfermedades,
-  //   loading: loadingenfermedades,
-  // });
   const isAuth = async () => {
     if (
       localStorage.getItem("token_refresh") === null ||
@@ -96,11 +85,15 @@ const AuthContext = ({ children }) => {
     }
   };
   useEffect(() => {
-    isAuth().then((res) => {
-      setAcceso(res);
-    });
+    isAuth()
+      .then((res) => {
+        setAcceso(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     return () => {
-      // localStorage.removeItem();
+      // localStorage.clear();
     };
   }, []);
 

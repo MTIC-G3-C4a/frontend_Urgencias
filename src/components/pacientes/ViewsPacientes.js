@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
 import Spinner from "../Spinner";
 import Paciente from "./Paciente";
+import contextAuth from "../AuthContext";
 export const ALL_PACIENTES = gql`
   query Query {
     getAllPacientes {
@@ -20,7 +21,16 @@ export const ALL_PACIENTES = gql`
 
 const ViewsPacientes = () => {
   const { data, error, loading } = useQuery(ALL_PACIENTES);
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  const { isAuth } = useContext(contextAuth);
+  useEffect(() => {
+    async function verifyAuth() {
+      await isAuth();
+    }
+    verifyAuth();
+  }, []);
+  if (error) {
+    return <p style={{ color: "red" }}>error</p>;
+  }
 
   return (
     <div>

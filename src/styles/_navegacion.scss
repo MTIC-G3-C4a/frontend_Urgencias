@@ -60,6 +60,14 @@
     }
     .buton-arrow {
       position: relative;
+      @media (min-width: 768px) {
+        @include flexCenter(row, center, baseline);
+        gap: 5px;
+
+        span {
+          margin-right: 0;
+        }
+      }
       span {
         margin-right: 1rem;
         font-size: 1rem;
@@ -124,4 +132,3 @@
     top: 100%;
   }
 }
-

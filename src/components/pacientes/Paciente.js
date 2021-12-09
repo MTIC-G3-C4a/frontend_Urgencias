@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { gql, useMutation } from "@apollo/client";
 import contextAuth from "../AuthContext";
@@ -14,13 +14,13 @@ const DELETE_PACIENTE = gql`
 `;
 
 export const FILT_PACIENTE = gql`
-query Query($documento: documentoPaciente!){
+  query Query($documento: documentoPaciente!) {
     getEnfermedadesPaciente(documento: documento) {
-        nombre
-        sintomas
-        medicina
-        }
+      nombre
+      sintomas
+      medicina
     }
+  }
 `;
 
 const Paciente = ({ paciente }) => {
@@ -32,19 +32,35 @@ const Paciente = ({ paciente }) => {
   const { isAuth, setEditandoPaciente } = useContext(contextAuth);
   const history = useHistory();
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingEdit, setLoadingEdit] = useState(false);
+
   const [openDiag, setOpenDiag] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setLoadingDelete(false);
+      setLoadingEdit(false);
+    };
+  }, []);
+
   //editar paciente
-  const handleEditPaciente = () => {
-    console.log("editando a " + paciente.nombre);
-    console.log(paciente);
+  const handleEditPaciente = async () => {
+    setLoadingEdit(true);
+    const autenticado = await isAuth();
+    setLoadingEdit(false);
+    if (!autenticado) {
+      history.push("/");
+      console.log("no autenticado");
+      return;
+    }
     setEditandoPaciente({ edit: true, paciente });
     history.push("/home/admin-pacientes");
   };
 
   // diagnostico paciente
   const handleDiagPaciente = async () => {
-    setOpenDiag(!openDiag)
-  }
+    setOpenDiag(!openDiag);
+  };
   // eliminar paciente
   const handleDeletePaciente = async () => {
     setLoadingDelete(true);
@@ -112,14 +128,16 @@ const Paciente = ({ paciente }) => {
         </p>
       </div>
       <div className="container-btns-paciente">
-        <button onClick={handleEditPaciente} className="btn-editar">
-          Editar
+        <button
+          onClick={handleEditPaciente}
+          disabled={loadingEdit}
+          className="btn-editar"
+        >
+          {loadingEdit && <Spinner />}Editar
         </button>
-        <button 
-          onClick={handleDiagPaciente}
-          className="btn-pred"> 
-          Diagnóstico Presuntivo 
-          </button>
+        <button onClick={handleDiagPaciente} className="btn-pred">
+          Diagnóstico Presuntivo
+        </button>
         <button
           onClick={handleDeletePaciente}
           disabled={loadingDelete}
@@ -129,7 +147,6 @@ const Paciente = ({ paciente }) => {
         </button>
       </div>
       {openDiag && <GetEnfermedades paciente={paciente}> </GetEnfermedades>}
-      {/* <getEnfermedades paciente={paciente}> </getEnfermedades> */}
     </div>
   );
 };

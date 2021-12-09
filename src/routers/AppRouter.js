@@ -7,15 +7,10 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import NotFound from "../components/NotFound";
 import Inicio from "../components/Inicio";
-// import { gql, useMutation, useQuery } from "@apollo/client";
 import contextAuth from "../components/AuthContext";
-
-// client.query({ query }).then((res) => console.log(res));
 
 const AppRouter = () => {
   const { auth } = useContext(contextAuth);
-  console.log(auth);
-
   return (
     <div>
       <BrowserRouter>
