@@ -3,12 +3,24 @@ import Swal from "sweetalert2";
 import { gql, useMutation } from "@apollo/client";
 import contextAuth from "../AuthContext";
 import { useHistory } from "react-router";
+import GetEnfermedades from "./FiltEnf";
 import Spinner from "../Spinner";
 import { ALL_PACIENTES } from "./ViewsPacientes";
+
 const DELETE_PACIENTE = gql`
   mutation Mutation($documento: String!) {
     deletePaciente(documento: $documento)
   }
+`;
+
+export const FILT_PACIENTE = gql`
+query Query($documento: documentoPaciente!){
+    getEnfermedadesPaciente(documento: documento) {
+        nombre
+        sintomas
+        medicina
+        }
+    }
 `;
 
 const Paciente = ({ paciente }) => {
@@ -16,9 +28,11 @@ const Paciente = ({ paciente }) => {
   const [eliminarPaciente] = useMutation(DELETE_PACIENTE, {
     refetchQueries: [{ query: ALL_PACIENTES }],
   });
+
   const { isAuth, setEditandoPaciente } = useContext(contextAuth);
   const history = useHistory();
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [openDiag, setOpenDiag] = useState(false);
   //editar paciente
   const handleEditPaciente = () => {
     console.log("editando a " + paciente.nombre);
@@ -26,6 +40,11 @@ const Paciente = ({ paciente }) => {
     setEditandoPaciente({ edit: true, paciente });
     history.push("/home/admin-pacientes");
   };
+
+  // diagnostico paciente
+  const handleDiagPaciente = async () => {
+    setOpenDiag(!openDiag)
+  }
   // eliminar paciente
   const handleDeletePaciente = async () => {
     setLoadingDelete(true);
@@ -96,6 +115,11 @@ const Paciente = ({ paciente }) => {
         <button onClick={handleEditPaciente} className="btn-editar">
           Editar
         </button>
+        <button 
+          onClick={handleDiagPaciente}
+          className="btn-pred"> 
+          Diagnóstico Presuntivo 
+          </button>
         <button
           onClick={handleDeletePaciente}
           disabled={loadingDelete}
@@ -104,6 +128,8 @@ const Paciente = ({ paciente }) => {
           {loadingDelete && <Spinner />}Eliminar
         </button>
       </div>
+      {openDiag && <GetEnfermedades paciente={paciente}> </GetEnfermedades>}
+      {/* <getEnfermedades paciente={paciente}> </getEnfermedades> */}
     </div>
   );
 };

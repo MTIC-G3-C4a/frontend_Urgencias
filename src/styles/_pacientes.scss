@@ -56,3 +56,33 @@
     }
   }
 }
+
+.container_diagnostico{
+  .container-spinner {
+    // height: auto;
+    color: $claro;
+    margin: 0 auto;
+    width: 1rem;
+    height: 1rem;
+    .sk-chase {
+      width: 1rem;
+      height: 1rem;
+      // width: 100%;
+    }
+  }
+  .container_enfermedad_filt{
+    margin-top: 40px;
+    padding: 1rem;
+    @include flexCenter(column);
+    div{
+      width: 100%;
+      p{
+        width: 100%;
+      }
+      @include flexCenter(row, flex-start);
+      gap: 5px;
+    }
+
+  }
+
+}

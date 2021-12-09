@@ -9,12 +9,6 @@ export const ALL_ENFERMEDADES = gql`
     getAllEnfermedades {
       sintomas
     }
-
-    getEnfermedadesPaciente(documento: $documento) {
-      nombre
-      sintomas
-      medicina
-    }
   }
 `;
 

@@ -77,5 +77,14 @@
         border: 1px solid $claro;
       }
     }
+    &.btn-pred {
+      border: 1px solid $primario;
+      color: $primario;
+      &:hover {
+        color: $primario;
+        background-color: $gris;
+        // transition: all 0.3s ease-out;
+      }
+    }
   }
 }
