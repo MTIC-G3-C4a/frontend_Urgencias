@@ -78,7 +78,7 @@
     border: 1px solid #283747;
   }
   
-  .registro-paciente button {
+  .registro-paciente a {
     width: 150px;
     height: 40px;
     color: #e5e7e9;
@@ -91,6 +91,15 @@
     text-align: center;
     display: flex;
     justify-content: center;
+    &.btn-registrar {
+      border: 1px solid $primario;
+      color: $secundario;
+      &:hover {
+        color: $claro;
+        background-color: $primario;
+        // transition: all 0.3s ease-out;
+      }
+    }
   }
   
   .registro-paciente button:hover {

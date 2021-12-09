@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import contextAuth from "../AuthContext";
+import ViewsEnfermedades from "./AllSintomas";
 import Swal from "sweetalert2";
 const CREATE_PACIENTE = gql`
 
@@ -17,7 +18,10 @@ mutation Mutation($paciente: PacienteInput!) {
     sintomas
   }
 }
+
 `;
+
+
 const initialState = {
     documento: "",
     tipoDocumento: "",
@@ -39,19 +43,35 @@ const CreatePaciente = () => {
         setPaciente({ ...PacienteInput, [e.target.name]: Number(e.target.value) });
         return
       }
-
+      // if(e.target.name == "sintoma"){
+      //   setPaciente(state=>({...state, sintomas: [...state.sintomas,e.target.value]}))
+      //   return
+      // }
       setPaciente({ ...PacienteInput, [e.target.name]: e.target.value });
+      console.log(e.target.value)
+
     };
   
     const [createPaciente] = useMutation(CREATE_PACIENTE);
   
     const handleSubmitForm = (e) => {
+      const formulario=document.getElementById("formRegistro")
       e.preventDefault();
       console.log(PacienteInput);
+
+
+
       // setPaciente({ ...PacienteInput, edad: Number(PacienteInput.edad) });
       // console.log(PacienteInput);
+    
+      const inputSintomas= document.querySelectorAll("input[name=sintoma]:checked") 
+      console.log(inputSintomas)
+      let arraySint=[]
+      inputSintomas.forEach((input)=>{
+        arraySint.push(input.value)
+      })
 
-      createPaciente({ variables: { paciente : PacienteInput} })
+      createPaciente({ variables: { paciente : {...PacienteInput,sintomas:arraySint}} })
         .then((res) => {
           console.log(res);
   
@@ -68,6 +88,7 @@ const CreatePaciente = () => {
         });
   
       setPaciente(initialState);
+      formulario.reset();
     };
     console.log(PacienteInput)
     return <div className="container-crear-paciente">
@@ -76,7 +97,7 @@ const CreatePaciente = () => {
     <div className="container_registro-paciente">
     <br />
       <h2>Registrar Paciente</h2><br />
-      <form onSubmit={handleSubmitForm}>
+      <form onSubmit={handleSubmitForm} id="formRegistro">
       
         <input
           onChange={handleChangeInputs}
@@ -143,23 +164,28 @@ const CreatePaciente = () => {
           placeholder="Observaciones"
         />
         <br />
-        <input
+
+        <br />
+        <h3> Seleccione los síntomas: </h3>
+        {/* <input
           onChange={handleChangeInputs}
           type="text"
           value={PacienteInput.sintomas}
           name="sintomas"
           placeholder="Sintomas"
-        />
-        <br />
-        <br />
+          disabled
+        /> */}
+        {/* <br />
+        <br /> */}
+        <ViewsEnfermedades setPaciente={setPaciente} handleChangeInputs={handleChangeInputs}> </ViewsEnfermedades>
         <div className="boton-paciente">
           <button type="submit">Registrar Paciente</button>
         </div>
         <br></br>
+        
       </form>
     </div>
   </div>
-  
 </div>
 };
 

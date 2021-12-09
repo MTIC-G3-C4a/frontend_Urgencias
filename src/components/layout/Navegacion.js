@@ -49,7 +49,7 @@ const Navegacion = ({ handleToggleMenu, open }) => {
             <div className="submenu-pacientes">
               <Link to="/home/admin-pacientes">Crear Paciente</Link>
               <Link to="/home/admin-pacientes/pacientes">Ver Todos</Link>
-              <Link to="/home/admin-pacientes/sintomas">Ver Síntomas</Link>
+              {/* <Link to="/home/admin-pacientes/sintomas">Ver Síntomas</Link> */}
 
             </div>
           </button>

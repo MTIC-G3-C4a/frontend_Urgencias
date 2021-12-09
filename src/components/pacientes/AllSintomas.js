@@ -3,6 +3,8 @@ import { gql } from "@apollo/client";
 import Spinner from "../Spinner";
 import contextAuth from "../AuthContext";
 export const ALL_ENFERMEDADES = gql`
+
+
   query Query {
     getAllEnfermedades {
       sintomas
@@ -16,7 +18,8 @@ export const ALL_ENFERMEDADES = gql`
   }
 `;
 
-var ViewsEnfermedades = () => {
+
+var ViewsEnfermedades = ({setPaciente,handleChangeInputs}) => {
   const { enfermedades, errorEnfermedades, loadingenfermedades } =
     useContext(contextAuth);
   const [allSintomas, setAllSintomas] = useState([]);
@@ -53,15 +56,12 @@ var ViewsEnfermedades = () => {
             return (
               <div className="container-sintomas" key={`${i}${sintoma}`}>
                 <label>{sintoma}</label>
-                <input type="checkbox" name="sintoma" />
+                <input type="checkbox" name="sintoma" onChange={handleChangeInputs} value={sintoma} />
               </div>
             );
           })}
         </div>
       )}
-        <div className="container-btns-sintomas">
-          <button className="btn-predecir" Diagnóstico Presuntivo> </button>
-        </div>
     </div>
   );
 };
