@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import imgSmall from "../assets/img-fondo.jpg";
 import imgDesk from "../assets/img-fondo-desk.jpg";
 import salud1 from "../assets/salud.jpg";
 import salud2 from "../assets/salud-2.jpg";
 import salud3 from "../assets/salud-3.png";
+import contextAuth from "./AuthContext";
+
+
 
 const Home = () => {
+ 
+  const { enfermedades } = useContext(contextAuth);
+    console.log(enfermedades)
   return (
     <div className="main-container-home">
       <div className="container-img-home">
@@ -68,10 +74,39 @@ const Home = () => {
               </p>
             </div>
           </div>
-        </div>
+
+
+        </div></div>
+
+      <div className="container-enfermedades">
+    {enfermedades?.getAllEnfermedades.map((enfermedad)=>(
+      <div className="paciente" key={enfermedad.nombre}>
+      <p>
+        <strong>Enfermedad: </strong>
+        {enfermedad.nombre}
+      </p>
+      <div className="detalles-extras">
+        <p>
+          <strong>Sintomas: </strong>
+          {enfermedad.sintomas.join(", ")}
+        </p>
+
       </div>
+      <div className="detalles-salud">
+        <p>
+          <strong>Medicina: </strong>
+          {enfermedad.medicina.join(", ")}
+        </p>
+      </div>
+      </div>
+    ))}
+       
+      </div>
+
+
+
+
     </div>
   );
 };
-
 export default Home;

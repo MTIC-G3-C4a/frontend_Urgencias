@@ -47,8 +47,10 @@ const Navegacion = ({ handleToggleMenu, open }) => {
             <span>Pacientes</span>
             <i className="fas fa-chevron-right"></i>
             <div className="submenu-pacientes">
-              <Link to="/home/admin-pacientes">crear paciente</Link>
-              <Link to="/home/admin-pacientes/pacientes">ver todos</Link>
+              <Link to="/home/admin-pacientes">Crear Paciente</Link>
+              <Link to="/home/admin-pacientes/pacientes">Ver Todos</Link>
+              {/* <Link to="/home/admin-pacientes/sintomas">Ver Síntomas</Link> */}
+
             </div>
           </button>
           <NavLink exact to="/home/about-us" activeClassName="active">
