@@ -1,7 +1,17 @@
 import { useMutation, gql, useLazyQuery } from "@apollo/client";
 import React, { createContext, useEffect, useState } from "react";
 const contextAuth = createContext();
-
+const initialStatePaciente = {
+  documento: "",
+  tipoDocumento: "",
+  nombre: "",
+  edad: "",
+  genero: "",
+  celular: "",
+  correo: "",
+  observaciones: "",
+  sintomas: [""],
+};
 const AuthContext = ({ children }) => {
   //  const { data, loading } = useQuery(All_pacientes);
 
@@ -32,6 +42,9 @@ const AuthContext = ({ children }) => {
   const [editandoEnfermedad, setEditandoEnfermedad] = useState({
     edit: false,
     enfermedad: initialStateEnfermedad,
+  const [editandoPaciente, setEditandoPaciente] = useState({
+    edit: false,
+    paciente: initialStatePaciente,
   });
   const [refreshSesion] = useMutation(REFRESH_SESION);
   const [
@@ -49,11 +62,11 @@ const AuthContext = ({ children }) => {
   //   loading: loadingenfermedades,
   // } = useQuery(ALL_ENFERMEDADES);
 
-  console.log({
-    data: enfermedades,
-    error: errorEnfermedades,
-    loading: loadingenfermedades,
-  });
+  // console.log({
+  //   data: enfermedades,
+  //   error: errorEnfermedades,
+  //   loading: loadingenfermedades,
+  // });
   const isAuth = async () => {
     if (
       localStorage.getItem("token_refresh") === null ||
@@ -105,7 +118,8 @@ const AuthContext = ({ children }) => {
     loadingenfermedades,
     editandoEnfermedad,
     setEditandoEnfermedad,
-
+    editandoPaciente,
+    setEditandoPaciente,
   };
   return <contextAuth.Provider value={data}>{children}</contextAuth.Provider>;
 };

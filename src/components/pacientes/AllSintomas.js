@@ -7,10 +7,16 @@ export const ALL_ENFERMEDADES = gql`
     getAllEnfermedades {
       sintomas
     }
+
+    getEnfermedadesPaciente(documento: $documento) {
+      nombre
+      sintomas
+      medicina
+    }
   }
 `;
 
-var ViewsEnfermedades = () => {
+var ViewsEnfermedades = ({ setPaciente, handleChangeInputs }) => {
   const { enfermedades, errorEnfermedades, loadingenfermedades } =
     useContext(contextAuth);
   const [allSintomas, setAllSintomas] = useState([]);
@@ -29,7 +35,9 @@ var ViewsEnfermedades = () => {
       });
     }
   }, [enfermedades]);
-  console.log(allSintomas);
+  // SE ORDENAN ALFABETICAMENTE
+  allSintomas.sort();
+  // console.log(allSintomas);
   console.log(enfermedades);
   if (errorEnfermedades) {
     console.log(errorEnfermedades);
@@ -40,12 +48,17 @@ var ViewsEnfermedades = () => {
       {loadingenfermedades ? (
         <Spinner />
       ) : (
-        <div className="container-enfermedades">
+        <div className="container-enfermedades-sintomas">
           {allSintomas.map((sintoma, i) => {
             return (
               <div className="container-sintomas" key={`${i}${sintoma}`}>
                 <label>{sintoma}</label>
-                <input type="checkbox" name="sintoma" />
+                <input
+                  type="checkbox"
+                  name="sintoma"
+                  onChange={handleChangeInputs}
+                  value={sintoma}
+                />
               </div>
             );
           })}

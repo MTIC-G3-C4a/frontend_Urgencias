@@ -12,13 +12,21 @@ const DELETE_PACIENTE = gql`
 `;
 
 const Paciente = ({ paciente }) => {
+  //hooks y variables de etado
   const [eliminarPaciente] = useMutation(DELETE_PACIENTE, {
     refetchQueries: [{ query: ALL_PACIENTES }],
   });
-  const { isAuth } = useContext(contextAuth);
+  const { isAuth, setEditandoPaciente } = useContext(contextAuth);
   const history = useHistory();
   const [loadingDelete, setLoadingDelete] = useState(false);
-
+  //editar paciente
+  const handleEditPaciente = () => {
+    console.log("editando a " + paciente.nombre);
+    console.log(paciente);
+    setEditandoPaciente({ edit: true, paciente });
+    history.push("/home/admin-pacientes");
+  };
+  // eliminar paciente
   const handleDeletePaciente = async () => {
     setLoadingDelete(true);
     const autenticado = await isAuth();
@@ -29,7 +37,7 @@ const Paciente = ({ paciente }) => {
       console.log("no autenticado");
       return;
     }
-
+    //alerta
     Swal.fire({
       title: "Estas de acuerdo?",
       text: `Deseas eliminar el paciente con ${paciente.tipoDocumento}:
@@ -85,7 +93,9 @@ const Paciente = ({ paciente }) => {
         </p>
       </div>
       <div className="container-btns-paciente">
-        <button className="btn-editar">Editar</button>
+        <button onClick={handleEditPaciente} className="btn-editar">
+          Editar
+        </button>
         <button
           onClick={handleDeletePaciente}
           disabled={loadingDelete}
@@ -99,5 +109,3 @@ const Paciente = ({ paciente }) => {
 };
 
 export default Paciente;
-
-

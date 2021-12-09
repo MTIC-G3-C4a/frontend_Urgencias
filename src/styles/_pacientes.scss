@@ -11,7 +11,7 @@
 }
 
 
-.container-enfermedades {
+.container-enfermedades-sintomas {
   margin-top: 40px;
   padding: 1rem;
   @include grid(4, 10px);
@@ -20,5 +20,39 @@
   }
   @media (max-width: 480px) {
     @include grid(1, 10px);
+  }
+}
+
+.container-btns-sintomas {
+  @include flexCenter();
+  gap: 10px;
+  button {
+    @include flexCenter();
+    gap: 5px;;
+    background-color: $claro;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+    &.btn-registrar {
+      border: 1px solid $primario;
+      color: $primario;
+      &:hover {
+        color: $claro;
+        background-color: $primario;
+        // transition: all 0.3s ease-out;
+      }
+    }
+    &.btn-predecir {
+      border: 1px solid $primario;
+      color: $primario;
+      &:hover {
+        color: $claro;
+        background-color: $primario;
+        // transition: all 0.3s ease-out;
+      }
+    }
   }
 }
