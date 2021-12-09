@@ -86,7 +86,7 @@ const Home = () => {
             <br />
           </div>
         </div>
-        <div className="container-pacientes">
+        <div className="container-enfermedades">
           <br />
           <h3> El sistema de diagnóstico cuenta con la siguiente base de datos de enfermedades:  </h3>
           <br />
