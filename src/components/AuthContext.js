@@ -42,6 +42,7 @@ const AuthContext = ({ children }) => {
   const [editandoEnfermedad, setEditandoEnfermedad] = useState({
     edit: false,
     enfermedad: initialStateEnfermedad,
+  });
   const [editandoPaciente, setEditandoPaciente] = useState({
     edit: false,
     paciente: initialStatePaciente,
