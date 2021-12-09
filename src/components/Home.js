@@ -76,7 +76,7 @@ const Home = () => {
           <div className="container-description-card">
           <br />
           <br />
-            <h3>Diagnostico</h3>
+            <h3>Diagnóstico</h3>
             <p>
                 Con los datos síntomas recolectados del paciente, APP URGENCIAS 
                 pre diagnostica la enfermedad o traumatismo a tratar,  
@@ -84,12 +84,18 @@ const Home = () => {
                 tener una base para poder desarrollar su actividad de manera más optima y ágil.
             </p>
           </div>
-
-
+          <br />
+          <br />
+        
         </div></div>
-
+      
       <div className="container-enfermedades">
-    {enfermedades?.getAllEnfermedades.map((enfermedad)=>(
+      <br />
+      <br />
+      <h3> El sistema de diagnóstico cuenta con la siguiente base de datos de enfermedades:  </h3>
+      <br />
+      <br />
+        {enfermedades?.getAllEnfermedades.map((enfermedad)=>(
       <div className="paciente" key={enfermedad.nombre}>
       <p>
         <strong>Enfermedad: </strong>

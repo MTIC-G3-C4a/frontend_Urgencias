@@ -92,6 +92,14 @@
     background-color: $claro;
     border-radius: 1rem;
     box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(35, 35, 35, 0);
+    .paciente{
+        margin: 16px 0;
+    }
+    h3{
+      margin: 16px 0;
+      color: $primario;
+    }
+
     .container-description {
       color: $oscuro;
       h2 {
