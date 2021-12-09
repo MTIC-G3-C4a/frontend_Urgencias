@@ -4,7 +4,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import ViewPaciente from "../components/pacientes/ViewPaciente";
 import ViewsPacientes from "../components/pacientes/ViewsPacientes";
 import NotFound from "../components/NotFound";
-import ViewsEnfermedades from "../components/pacientes/AllSintomas";
+import CreateEnfermedad from "../components/pacientes/CreateEnfermedad";
+import AllEnfermedades from "../components/pacientes/AllEnfermedades";
+
 const AdminRouter = () => {
   return (
     <Switch>
@@ -14,11 +16,16 @@ const AdminRouter = () => {
         path="/home/admin-pacientes/pacientes"
         component={ViewsPacientes}
       />
-      <Route 
-        exact 
-        path="/home/admin-pacientes/sintomas" 
-        component={ViewsEnfermedades} />
       <Route
+        exact
+        path="/home/admin-pacientes/enfermedad"
+        component={CreateEnfermedad} />
+        <Route
+        exact
+        path="/home/admin-pacientes/enfermedades/"
+        component={AllEnfermedades} />
+    
+      <Route      
         exact
         path="/home/admin-pacientes/paciente/:id"
         component={ViewPaciente}

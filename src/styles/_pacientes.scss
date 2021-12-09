@@ -14,7 +14,7 @@
 .container-enfermedades {
   margin-top: 40px;
   padding: 1rem;
-  @include grid(3, 10px);
+  @include grid(4, 10px);
   @media (max-width: 768px) {
     @include grid(2, 10px);
   }

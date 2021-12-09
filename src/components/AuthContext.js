@@ -5,6 +5,12 @@ const contextAuth = createContext();
 const AuthContext = ({ children }) => {
   //  const { data, loading } = useQuery(All_pacientes);
 
+  const initialStateEnfermedad = {
+    nombre: "",
+    sintomas: "",
+    medicina: "",
+  };
+
   const ALL_ENFERMEDADES = gql`
     query Query {
       getAllEnfermedades {
@@ -23,6 +29,10 @@ const AuthContext = ({ children }) => {
     }
   `;
   const [acceso, setAcceso] = useState(false);
+  const [editandoEnfermedad, setEditandoEnfermedad] = useState({
+    edit: false,
+    enfermedad: initialStateEnfermedad,
+  });
   const [refreshSesion] = useMutation(REFRESH_SESION);
   const [
     getEnfermedades,
@@ -93,6 +103,9 @@ const AuthContext = ({ children }) => {
     enfermedades,
     errorEnfermedades,
     loadingenfermedades,
+    editandoEnfermedad,
+    setEditandoEnfermedad,
+
   };
   return <contextAuth.Provider value={data}>{children}</contextAuth.Provider>;
 };
