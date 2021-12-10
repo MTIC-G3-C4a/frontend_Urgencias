@@ -15,16 +15,27 @@
   }
 
   }
-  .container-img-c {    
-       
-    img {
-      position:absolute;
-      width: 20%;      
+  .container-img-c {   
+    @include flexCenter(); 
+    width: 100%;  
+    picture {
+      @include flexCenter(); 
+      width: 100%;  
+      img {   
+      width: 30%;      
       padding: 10px;
-      top: 80%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-     
+      margin: 0 auto;
+      object-fit:contain;
+      }    
+    }
+  }
+  .container-img-arq {    
+     width: 100%;  
+    img {      
+      width: 100%;      
+      padding: 10px;
+      margin: 0 auto;
+      object-fit:contain;    
     }
   }
 
@@ -32,7 +43,7 @@
 .details-au {
   @include flexCenter(column, center, stretch);
   position: absolute;
-  top: 15%;
+  top: 50px;
   width: min(550px, 90%);
   right: 0;
   left: 0;
