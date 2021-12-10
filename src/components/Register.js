@@ -21,7 +21,7 @@ const initialState = {
 };
 const Register = () => {
   const [user, setUser] = useState(initialState);
-  const { setAccess } = useContext(contextAuth);
+  const { setAcceso } = useContext(contextAuth);
 
   const handleChangeInputs = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -42,7 +42,7 @@ const Register = () => {
         localStorage.setItem("token_access", tokenAccess);
         localStorage.setItem("token_refresh", tokenRefresh);
 
-        setAccess(true);
+        setAcceso(true);
       })
       .catch((error) => {
         Swal.fire("error", "datos incorrectos", "error");
